@@ -20,11 +20,13 @@ package creativeitemscleaner;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -98,6 +100,13 @@ public class CreativeItemsListener implements Listener {
 				event.setCursor(ItemStackCleaner.generateCleanItem(item));
 				lastTakenItem.remove(player.getUniqueId());
 			}
+		}
+	}
+
+	@EventHandler(ignoreCancelled=true)
+	public void onGameModeChane(PlayerGameModeChangeEvent event) {
+		if (event.getPlayer().getGameMode() == GameMode.CREATIVE) {
+			lastTakenItem.remove(event.getPlayer().getUniqueId());
 		}
 	}
 
