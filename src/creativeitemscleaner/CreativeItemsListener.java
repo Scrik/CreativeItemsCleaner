@@ -72,7 +72,6 @@ public class CreativeItemsListener implements Listener {
 								lastTakenItem.remove(uuid);
 								return;
 							} else {//still some left in player cursor or maybe not
-								System.out.println("Stack partial");
 								if (lastTakenItem.containsKey(uuid)) {
 									lastTakenItem.get(uuid).setAmount(lastTakenItem.get(uuid).getAmount() - (item.getMaxStackSize() - slotItem.getAmount()));
 								}
