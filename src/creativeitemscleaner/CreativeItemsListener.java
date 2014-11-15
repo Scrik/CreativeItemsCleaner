@@ -36,12 +36,18 @@ public class CreativeItemsListener implements Listener {
 
 	@EventHandler(ignoreCancelled=true)
 	public void onCreativeItemGet(InventoryCreativeEvent event) {
-		if (event.getWhoClicked().hasPermission("creativeitemscleaner.ignore")) {
+		Player player = (Player) event.getWhoClicked();
+		if (player.hasPermission("creativeitemscleaner.ignore")) {
 			return;
 		}
-		final Player player = (Player) event.getWhoClicked();
-		UUID uuid = player.getUniqueId();
 		ItemStack item = event.getCursor();
+		if (player.hasPermission("creativeitemscleaner.justclean")) {
+			if (item != null) {
+				event.setCursor(ItemStackCleaner.generateCleanItem(item));
+			}
+			return;
+		}
+		UUID uuid = player.getUniqueId();
 		if (item != null) {
 			try {
 				ItemStack slotItem = player.getInventory().getItem(event.getSlot());
