@@ -30,6 +30,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ItemStackCleaner {
 
+	//Generates new itemstack based on the properties of the old
 	public static ItemStack generateCleanItem(ItemStack oldItem) {
 		//handle base
 		ItemStack newItem = new ItemStack(oldItem.getType());
