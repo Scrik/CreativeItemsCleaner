@@ -50,6 +50,7 @@ public class CreativeItemsListener implements Listener {
 		UUID uuid = player.getUniqueId();
 		if (item != null) {
 			try {
+				//
 				ItemStack slotItem = player.getInventory().getItem(event.getSlot());
 				//discard 0 and negative count items or items over maxstacksize (othwersize logic in next checks will break)
 				if (item.getType() != Material.AIR && (item.getAmount() <= 0 || item.getAmount() > item.getMaxStackSize())) {
@@ -61,6 +62,14 @@ public class CreativeItemsListener implements Listener {
 					if (lastTakenItem.get(uuid).getAmount() <= 0) {
 						lastTakenItem.remove(uuid);
 					}
+				}
+				//If slot if -999 than player has thrown item out of inventory
+				if (event.getSlot() == -999) {
+					if (!item.equals(lastTakenItem.get(uuid))) {
+						event.setCursor(ItemStackCleaner.generateCleanItem(item));
+					}
+					lastTakenItem.remove(uuid);
+					return;
 				}
 				//if item is air than player probably taken the item from inventory to cursor
 				if (item.getType() == Material.AIR) {
@@ -108,6 +117,7 @@ public class CreativeItemsListener implements Listener {
 			}
 		}
 	}
+
 
 	@EventHandler(ignoreCancelled=true)
 	public void onGameModeChane(PlayerGameModeChangeEvent event) {
